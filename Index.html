@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ravi ❤️ Bujji</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+ --green:#0f2e25;
+ --sage:#1f4d3b;
+ --cream:#f6f3ee;
+ --gold:#c8a96a;
+}
+
+body{
+ margin:0;
+ font-family:Poppins;
+ background:var(--cream);
+ color:#333;
+ line-height:1.8;
+}
+
+/* ===== INTRO ===== */
+#intro{
+ position:fixed;
+ inset:0;
+ background:var(--green);
+ color:white;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ z-index:999;
+ text-align:center;
+}
+
+#intro h1{
+ font-family:'Playfair Display';
+ font-size:40px;
+}
+
+.enter{
+ margin-top:25px;
+ padding:12px 26px;
+ border:none;
+ border-radius:30px;
+ background:var(--gold);
+ color:white;
+}
+
+/* ===== HERO ===== */
+.hero{
+ background:var(--green);
+ color:white;
+ text-align:center;
+ padding:90px 20px;
+}
+
+.hero h1{
+ font-family:'Playfair Display';
+ font-size:56px;
+}
+
+.hero img{
+ width:90%;
+ max-width:520px;
+ border-radius:20px;
+ margin-top:30px;
+}
+
+.countdown{
+ margin-top:20px;
+ font-size:18px;
+}
+
+/* ===== SPLIT SECTIONS ===== */
+.split{
+ display:flex;
+ flex-wrap:wrap;
+ align-items:center;
+ max-width:1100px;
+ margin:auto;
+ padding:80px 20px;
+ gap:40px;
+}
+
+.split img{
+ width:420px;
+ border-radius:20px;
+}
+
+.text{
+ flex:1;
+ font-family:'Cormorant Garamond';
+ font-size:22px;
+}
+
+h2{
+ font-family:'Playfair Display';
+ color:var(--sage);
+ font-size:36px;
+}
+
+/* ===== GALLERY ===== */
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:10px;
+ padding:60px 20px;
+ max-width:1100px;
+ margin:auto;
+}
+
+.grid img{
+ width:100%;
+ border-radius:12px;
+}
+
+/* ===== BUTTONS ===== */
+.buttons{
+ text-align:center;
+ padding:40px;
+}
+
+button{
+ padding:10px 22px;
+ border:none;
+ border-radius:25px;
+ background:var(--sage);
+ color:white;
+ margin:6px;
+}
+
+/* ===== HEARTS ===== */
+.heart{
+ position:fixed;
+ top:-10px;
+ animation:fall 6s linear infinite;
+}
+@keyframes fall{
+ to{transform:translateY(110vh);opacity:0}
+}
+
+/* fireworks */
+canvas{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+}
+
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.8);
+ justify-content:center;
+ align-items:center;
+}
+
+.box{
+ background:white;
+ padding:25px;
+ border-radius:15px;
+ max-width:300px;
+ text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+<h1>Happy Valentine’s Day<br>Bujji 💚</h1>
+<button class="enter" onclick="start()">Enter Our Story</button>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<section class="hero">
+<h1>Ravi & Bujji</h1>
+<p class="countdown" id="count"></p>
+<img src="hero.jpg">
+</section>
+
+<!-- STORY SPLIT -->
+<section class="split">
+<img src="photo1.jpg">
+<div class="text">
+<h2>Where It All Began</h2>
+We met at a mall… two strangers, nervous smiles, pretending to be calm.  
+But somewhere between those small talks, our hearts quietly recognized each other.
+</div>
+</section>
+
+<section class="split">
+<div class="text">
+<h2>The Yes That Changed Everything</h2>
+When you said “yes” to meeting again the next day,  
+you didn’t know you had already become my forever.
+</div>
+<img src="photo2.jpg">
+</section>
+
+<section class="split">
+<img src="photo3.jpg">
+<div class="text">
+<h2>Becoming One</h2>
+Families met, days passed, love grew deeper…  
+until June 8th, the day I married my best friend.
+</div>
+</section>
+
+<!-- GALLERY -->
+<section class="grid">
+<img src="photo4.jpg">
+<img src="photo5.jpg">
+<img src="photo6.jpg">
+<img src="photo7.jpg">
+<img src="photo8.jpg">
+<img src="photo9.jpg">
+<img src="photo10.jpg">
+<img src="photo11.jpg">
+<img src="photo12.jpg">
+<img src="photo13.jpg">
+</section>
+
+<div class="buttons">
+<button onclick="toggleMusic()">🎵 Our Song</button>
+<button onclick="letter()">💌 Love Letter</button>
+<button onclick="surprise()">🎁 Surprise</button>
+</div>
+
+<audio id="music" loop>
+<source src="song.mp3">
+</audio>
+
+<div class="modal" id="modal">
+<div class="box">
+<p>Forever isn’t long enough with you ❤️</p>
+<button onclick="modal.style.display='none'">Close</button>
+</div>
+</div>
+
+<script>
+
+/* start */
+function start(){
+ intro.style.display="none";
+ music.play();
+ fireworks();
+}
+
+/* anniversary countdown */
+const startDate=new Date("June 8, 2025");
+setInterval(()=>{
+ const diff=Math.floor((new Date()-startDate)/(1000*60*60*24));
+ count.innerHTML="Married for "+diff+" days 💚";
+},1000);
+
+/* music */
+function toggleMusic(){music.paused?music.play():music.pause();}
+
+/* modal */
+function letter(){modal.style.display="flex";}
+function surprise(){alert("I choose you. Every lifetime. Every day. ❤️");}
+
+/* hearts */
+setInterval(()=>{
+ const h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="💚";
+ h.style.left=Math.random()*100+"vw";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),6000);
+},600);
+
+/* fireworks */
+function fireworks(){
+ const c=document.getElementById("fireworks");
+ const ctx=c.getContext("2d");
+ c.width=innerWidth; c.height=innerHeight;
+ for(let i=0;i<50;i++){
+  ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+  ctx.beginPath();
+  ctx.arc(Math.random()*c.width,Math.random()*c.height,3,0,6.28);
+  ctx.fill();
+ }
+ setTimeout(()=>ctx.clearRect(0,0,c.width,c.height),1500);
+}
+
+</script>
+
+</body>
+</html>
